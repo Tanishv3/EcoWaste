@@ -27,8 +27,7 @@
                     <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
                 <div class="nav-actions">
-                    <button class="btn btn-secondary" id="loginBtn">Login</button>
-                    <button class="btn btn-primary" id="signupBtn">Sign Up</button>
+                    <button class="btn btn-primary" id="signInUpBtn">Sign In / Up</button>
                 </div>
                 <div class="hamburger">
                     <span class="bar"></span>
@@ -382,17 +381,17 @@
     <div class="modal" id="loginModal">
         <div class="modal-content">
             <span class="close-btn" data-modal="loginModal">&times;</span>
-            <h2>Welcome Back</h2>
-            <form class="modal-form">
+            <h2>Sign In</h2>
+            <form id="loginForm">
                 <div class="form-group">
                     <input type="email" placeholder="Email" required>
                 </div>
                 <div class="form-group">
                     <input type="password" placeholder="Password" required>
                 </div>
-                <button type="submit" class="btn btn-primary btn-large">Login</button>
+                <button type="submit" class="btn btn-primary">Sign In</button>
             </form>
-            <p>Don't have an account? <a href="#" id="switchToSignup">Sign up</a></p>
+            <p class="switch-form">Don't have an account? <a href="#" id="switchToSignup">Sign Up</a></p>
         </div>
     </div>
 
@@ -401,7 +400,7 @@
         <div class="modal-content">
             <span class="close-btn" data-modal="signupModal">&times;</span>
             <h2>Join EcoWaste</h2>
-            <form class="modal-form">
+            <form id="signupForm">
                 <div class="form-group">
                     <input type="text" placeholder="Full Name" required>
                 </div>
@@ -414,9 +413,9 @@
                 <div class="form-group">
                     <input type="password" placeholder="Confirm Password" required>
                 </div>
-                <button type="submit" class="btn btn-primary btn-large">Sign Up</button>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
             </form>
-            <p>Already have an account? <a href="#" id="switchToLogin">Login</a></p>
+            <p class="switch-form">Already have an account? <a href="#" id="switchToLogin">Sign In</a></p>
         </div>
     </div>
 

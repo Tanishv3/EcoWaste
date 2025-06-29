@@ -113,7 +113,7 @@ EcoWaste/
 ### Key Interactions
 - **Navigation**: Smooth scrolling between sections
 - **Filtering**: Real-time marketplace filtering
-- **Modal Windows**: Login, signup, and item detail modals
+- **Modal Windows**: Sign In/Up, and item detail modals
 - **Form Validation**: Client-side form validation
 - **File Upload**: Drag-and-drop image upload
 
@@ -144,7 +144,7 @@ EcoWaste/
 - File upload with preview
 
 ### Modals
-- Login/Signup modals
+- Sign In/Up modals
 - Item detail modal
 - Bidding modal
 - Toast notifications

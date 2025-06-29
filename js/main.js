@@ -112,16 +112,14 @@ class EcoWasteApp {
 
     setupModals() {
         const modals = document.querySelectorAll('.modal');
-        const loginBtn = document.getElementById('loginBtn');
-        const signupBtn = document.getElementById('signupBtn');
+        const signInUpBtn = document.getElementById('signInUpBtn');
         const switchToSignup = document.getElementById('switchToSignup');
         const switchToLogin = document.getElementById('switchToLogin');
 
         // Open modals
-        loginBtn.addEventListener('click', () => this.openModal('loginModal'));
-        signupBtn.addEventListener('click', () => this.openModal('signupModal'));
+        signInUpBtn.addEventListener('click', () => this.openModal('loginModal'));
         
-        // Switch between login and signup
+        // Switch between Sign In and signup
         switchToSignup.addEventListener('click', (e) => {
             e.preventDefault();
             this.closeModal('loginModal');
