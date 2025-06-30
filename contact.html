@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - EcoWaste</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -32,60 +35,11 @@
     <!-- Contact Section -->
     <section class="contact-section">
         <div class="container">
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h2 class="section-title">Get In Touch</h2>
-                    <p class="section-subtitle">We're here to help with any questions about our platform or services.</p>
-                    
-                    <div class="contact-methods">
-                        <div class="contact-method">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <h4>Email</h4>
-                                <p>support@ecowaste.com</p>
-                                <p>info@ecowaste.com</p>
-                            </div>
-                        </div>
-                        <div class="contact-method">
-                            <i class="fas fa-phone"></i>
-                            <div>
-                                <h4>Phone</h4>
-                                <p>+91 98765 43210</p>
-                                <p>Mon-Fri, 9AM-6PM IST</p>
-                            </div>
-                        </div>
-                        <div class="contact-method">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>
-                                <h4>Address</h4>
-                                <p>123 Green Street<br>Eco City, India 110001</p>
-                            </div>
-                        </div>
-                        <div class="contact-method">
-                            <i class="fas fa-clock"></i>
-                            <div>
-                                <h4>Business Hours</h4>
-                                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                                <p>Saturday: 10:00 AM - 4:00 PM</p>
-                                <p>Sunday: Closed</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="contact-social">
-                        <h4>Follow Us</h4>
-                        <div class="social-links">
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
+            <div class="contact-grid">
                 <div class="contact-form-container">
                     <form class="contact-form">
-                        <h3>Send us a Message</h3>
+                        <h2 class="section-title">Send Us a Message</h2>
+                        <p class="section-subtitle">We'll get back to you as soon as possible.</p>
                         
                         <div class="form-row">
                             <div class="form-group">
@@ -104,11 +58,6 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="phone">Phone (Optional)</label>
-                            <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210">
-                        </div>
-                        
-                        <div class="form-group">
                             <label for="subject">Subject</label>
                             <select id="subject" name="subject" required>
                                 <option value="">Select a topic</option>
@@ -117,7 +66,6 @@
                                 <option value="billing">Billing Question</option>
                                 <option value="partnership">Partnership</option>
                                 <option value="feedback">Feedback</option>
-                                <option value="other">Other</option>
                             </select>
                         </div>
                         
@@ -126,19 +74,41 @@
                             <textarea id="message" name="message" placeholder="Tell us how we can help you..." rows="5" required></textarea>
                         </div>
                         
-                        <div class="form-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" required>
-                                <span class="checkmark"></span>
-                                I agree to the <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms of Service</a>
-                            </label>
-                        </div>
-                        
                         <button type="submit" class="btn btn-primary btn-large">
                             <i class="fas fa-paper-plane"></i>
                             Send Message
                         </button>
                     </form>
+                </div>
+
+                <div class="contact-info-container">
+                    <h2 class="section-title">Contact Information</h2>
+                    <div class="contact-info-card">
+                        <div class="contact-method">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Our Address</h4>
+                                <p>123 Green Street, Eco City, India 110001</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email Us</h4>
+                                <p>support@ecowaste.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Call Us</h4>
+                                <p>+91 98765 43210</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="map-container">
+                        <!-- Interactive map will be loaded here -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -241,7 +211,11 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
     <script src="js/components.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/contact.js"></script>
 </body>
 </html>

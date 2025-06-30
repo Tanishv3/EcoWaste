@@ -71,71 +71,93 @@
                 </div>
                 
                 <div class="sell-form-container">
+                    <div class="form-progress-bar">
+                        <div class="progress-step active" data-step="1">
+                            <div class="step-icon">1</div>
+                            <div class="step-label">Details</div>
+                        </div>
+                        <div class="progress-step" data-step="2">
+                            <div class="step-icon">2</div>
+                            <div class="step-label">Condition</div>
+                        </div>
+                        <div class="progress-step" data-step="3">
+                            <div class="step-icon">3</div>
+                            <div class="step-label">Photos & Price</div>
+                        </div>
+                    </div>
+
                     <form class="sell-form" id="sellForm">
-                        <h3>List Your Device</h3>
-                        
-                        <div class="form-group">
-                            <label for="deviceType">Device Type</label>
-                            <select id="deviceType" name="deviceType" required>
-                                <option value="">Select device type</option>
-                                <option value="mobile">Mobile Phone</option>
-                                <option value="laptop">Laptop</option>
-                                <option value="tablet">Tablet</option>
-                                <option value="smartwatch">Smartwatch</option>
-                                <option value="headphones">Headphones</option>
-                                <option value="gaming">Gaming Console</option>
-                                <option value="camera">Camera</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="deviceBrand">Brand</label>
-                            <input type="text" id="deviceBrand" name="deviceBrand" placeholder="e.g., Apple, Samsung, Sony" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="deviceModel">Model</label>
-                            <input type="text" id="deviceModel" name="deviceModel" placeholder="e.g., iPhone 13, Galaxy S21" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="deviceCondition">Condition</label>
-                            <select id="deviceCondition" name="deviceCondition" required>
-                                <option value="">Select condition</option>
-                                <option value="excellent">Excellent - Like new</option>
-                                <option value="good">Good - Minor wear</option>
-                                <option value="fair">Fair - Some issues</option>
-                                <option value="poor">Poor - Major issues</option>
-                                <option value="broken">Broken - Not working</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="deviceDescription">Description</label>
-                            <textarea id="deviceDescription" name="deviceDescription" placeholder="Describe the device condition, any defects, included accessories..." rows="4" required></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="askingPrice">Asking Price (₹)</label>
-                            <input type="number" id="askingPrice" name="askingPrice" placeholder="Enter your expected price" min="0" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="deviceImages">Upload Images</label>
-                            <div class="file-upload-area" id="fileUploadArea">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Click to upload or drag and drop</p>
-                                <p class="file-types">PNG, JPG, JPEG up to 10MB</p>
-                                <input type="file" id="deviceImages" name="deviceImages" multiple accept="image/*" hidden>
+                        <!-- Step 1: Device Details -->
+                        <div class="form-step active" data-step="1">
+                            <h3 class="step-title">Tell us about your device</h3>
+                            <div class="form-group">
+                                <label for="deviceType">Device Type</label>
+                                <select id="deviceType" name="deviceType" required>
+                                    <option value="">Select device type</option>
+                                    <option value="mobile">Mobile Phone</option>
+                                    <option value="laptop">Laptop</option>
+                                    <option value="tablet">Tablet</option>
+                                    <option value="smartwatch">Smartwatch</option>
+                                    <option value="headphones">Headphones</option>
+                                    <option value="gaming">Gaming Console</option>
+                                    <option value="camera">Camera</option>
+                                    <option value="other">Other</option>
+                                </select>
                             </div>
-                            <div class="uploaded-images" id="uploadedImages"></div>
+                            <div class="form-group">
+                                <label for="deviceBrand">Brand</label>
+                                <input type="text" id="deviceBrand" name="deviceBrand" placeholder="e.g., Apple, Samsung, Sony" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="deviceModel">Model</label>
+                                <input type="text" id="deviceModel" name="deviceModel" placeholder="e.g., iPhone 13, Galaxy S21" required>
+                            </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-large">
-                            <i class="fas fa-plus"></i>
-                            List Device
-                        </button>
+                        <!-- Step 2: Condition & Description -->
+                        <div class="form-step" data-step="2">
+                            <h3 class="step-title">Describe its condition</h3>
+                            <div class="form-group">
+                                <label for="deviceCondition">Condition</label>
+                                <select id="deviceCondition" name="deviceCondition" required>
+                                    <option value="">Select condition</option>
+                                    <option value="excellent">Excellent - Like new</option>
+                                    <option value="good">Good - Minor wear</option>
+                                    <option value="fair">Fair - Some issues</option>
+                                    <option value="poor">Poor - Major issues</option>
+                                    <option value="broken">Broken - Not working</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="deviceDescription">Description</label>
+                                <textarea id="deviceDescription" name="deviceDescription" placeholder="Describe the device condition, any defects, included accessories..." rows="4" required></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Photos & Price -->
+                        <div class="form-step" data-step="3">
+                            <h3 class="step-title">Upload Photos & Set Price</h3>
+                            <div class="form-group">
+                                <label for="deviceImages">Upload Images</label>
+                                <div class="file-upload-area" id="fileUploadArea">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Click to upload or drag and drop</p>
+                                    <p class="file-types">PNG, JPG, JPEG up to 10MB</p>
+                                    <input type="file" id="deviceImages" name="deviceImages" multiple accept="image/*" hidden>
+                                </div>
+                                <div class="uploaded-images" id="uploadedImages"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="askingPrice">Asking Price (₹)</label>
+                                <input type="number" id="askingPrice" name="askingPrice" placeholder="Enter your expected price" min="0" required>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevBtn" style="display: none;">Previous</button>
+                            <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+                            <button type="submit" class="btn btn-primary" id="submitBtn" style="display: none;">List Device</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -199,5 +221,6 @@
     <!-- Scripts -->
     <script src="js/components.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/sell.js"></script>
 </body>
 </html>

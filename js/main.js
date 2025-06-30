@@ -17,6 +17,8 @@ class EcoWasteApp {
         this.currentFilter = 'all';
         this.itemsPerPage = 6;
         this.currentPage = 1;
+        this.searchQuery = '';
+        this.sortOrder = 'newest';
         this.typewriterText = ['Treasure', 'Cash', 'Value', 'Opportunity'];
         this.typewriterIndex = 0;
         this.charIndex = 0;
@@ -39,6 +41,9 @@ class EcoWasteApp {
         
         // Marketplace
         this.setupMarketplace();
+        
+        // Featured Listings
+        this.setupFeaturedListings();
         
         // Scroll effects
         this.setupScrollEffects();
@@ -364,6 +369,24 @@ class EcoWasteApp {
             });
         }
 
+        // Search bar
+        const searchBar = document.getElementById('searchBar');
+        if (searchBar) {
+            searchBar.addEventListener('input', this.debounce((e) => {
+                this.searchQuery = e.target.value.toLowerCase();
+                this.applyFilters();
+            }, 300));
+        }
+
+        // Sort options
+        const sortOptions = document.getElementById('sortOptions');
+        if (sortOptions) {
+            sortOptions.addEventListener('change', (e) => {
+                this.sortOrder = e.target.value;
+                this.applyFilters();
+            });
+        }
+
         // Load more button (only if it exists)
         const loadMoreBtn = document.getElementById('loadMoreBtn');
         if (loadMoreBtn) {
@@ -371,6 +394,8 @@ class EcoWasteApp {
                 this.loadMoreItems();
             });
         }
+
+        this.filterItems('all');
     }
 
     generateMarketplaceItems() {
@@ -425,17 +450,47 @@ class EcoWasteApp {
         this.filterItems('all');
     }
 
+    applyFilters() {
+        let items = [...this.marketplaceItems];
+
+        // Filter by category
+        if (this.currentFilter !== 'all') {
+            items = items.filter(item => item.category === this.currentFilter);
+        }
+
+        // Filter by search query
+        if (this.searchQuery) {
+            items = items.filter(item => 
+                item.brand.toLowerCase().includes(this.searchQuery) ||
+                item.model.toLowerCase().includes(this.searchQuery) ||
+                item.description.toLowerCase().includes(this.searchQuery)
+            );
+        }
+
+        // Sort items
+        const conditionOrder = ['excellent', 'good', 'fair', 'poor', 'broken'];
+        items.sort((a, b) => {
+            switch (this.sortOrder) {
+                case 'price-asc':
+                    return (a.currentBid || a.price) - (b.currentBid || b.price);
+                case 'price-desc':
+                    return (b.currentBid || b.price) - (a.currentBid || a.price);
+                case 'condition':
+                    return conditionOrder.indexOf(a.condition) - conditionOrder.indexOf(b.condition);
+                case 'newest':
+                default:
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+            }
+        });
+
+        this.filteredItems = items;
+        this.currentPage = 1;
+        this.renderMarketplaceItems();
+    }
+
     filterItems(category) {
         this.currentFilter = category;
-        this.currentPage = 1;
-        
-        if (category === 'all') {
-            this.filteredItems = [...this.marketplaceItems];
-        } else {
-            this.filteredItems = this.marketplaceItems.filter(item => item.category === category);
-        }
-        
-        this.renderMarketplaceItems();
+        this.applyFilters();
     }
 
     renderMarketplaceItems() {
@@ -881,6 +936,20 @@ class EcoWasteApp {
                 clearTimeout(autoHide);
                 toast.classList.remove('show');
             };
+        }
+    }
+
+    setupFeaturedListings() {
+        const grid = document.getElementById('featuredListingsGrid');
+        if (!grid) return;
+
+        // Use the first 4 items from the marketplace as featured items
+        const featuredItems = this.marketplaceItems.slice(0, 4);
+        
+        if (featuredItems.length > 0) {
+            grid.innerHTML = featuredItems.map(item => this.createMarketplaceItemHTML(item)).join('');
+        } else {
+            grid.innerHTML = '<p>No featured items available at the moment.</p>';
         }
     }
 }
