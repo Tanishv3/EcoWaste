@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoWaste - Sustainable E-Waste Solutions</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Component Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background"></div>
+        <canvas id="hero-canvas" class="hero-particles"></canvas>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    Turn Your <span class="gradient-text">E-Waste</span> Into
+                    <span class="typewriter-text"></span>
+                </h1>
+                <p class="hero-description">
+                    Connect with buyers who see value in your broken or unwanted electronics.
+                    Promote sustainability while earning money through our innovative platform.
+                </p>
+                <div class="hero-buttons">
+                    <a href="sell.html" class="btn btn-primary btn-large">
+                        <i class="fas fa-plus"></i>
+                        Start Selling
+                    </a>
+                    <a href="marketplace.html" class="btn btn-outline btn-large">
+                        <i class="fas fa-search"></i>
+                        Browse Marketplace
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-devices">
+                    <div class="device-icon phone"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="device-icon laptop"><i class="fas fa-laptop"></i></div>
+                    <div class="device-icon headphones"><i class="fas fa-headphones"></i></div>
+                    <div class="device-icon tablet"><i class="fas fa-tablet-alt"></i></div>
+                    <div class="device-icon camera"><i class="fas fa-camera"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" data-target="10000">0</div>
+                    <div class="stat-label">Devices Recycled</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="500">0</div>
+                    <div class="stat-label">Active Buyers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="50000">0</div>
+                    <div class="stat-label">Tons CO₂ Saved</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="95">0</div>
+                    <div class="stat-label">Success Rate %</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marketplace Section -->
+    <section id="marketplace" class="marketplace">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Active Marketplace</h2>
+                <p class="section-subtitle">Discover electronics waiting for their second life</p>
+            </div>
+            
+            <div class="marketplace-filters">
+                <button class="filter-btn active" data-category="all">All Items</button>
+                <button class="filter-btn" data-category="mobile">Mobile Phones</button>
+                <button class="filter-btn" data-category="audio">Audio Devices</button>
+                <button class="filter-btn" data-category="computing">Computing</button>
+                <button class="filter-btn" data-category="gaming">Gaming</button>
+            </div>
+
+            <div class="marketplace-grid" id="marketplaceGrid">
+                <!-- Items will be dynamically loaded here -->
+            </div>
+
+            <div class="load-more-container">
+                <button class="btn btn-outline" id="loadMoreBtn">Load More Items</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sell Device Section -->
+    <section id="sell" class="sell-section">
+        <div class="container">
+            <div class="sell-content">
+                <div class="sell-info">
+                    <h2 class="section-title">Sell Your Device</h2>
+                    <p class="section-subtitle">Turn your unused electronics into cash while helping the environment</p>
+                    <div class="sell-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>List Your Device</h3>
+                                <p>Provide details about your electronic device and its condition</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Receive Bids</h3>
+                                <p>Buyers will place bids on your device based on its specifications</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Complete Sale</h3>
+                                <p>Accept the best offer and arrange pickup or delivery</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sell-form-container">
+                    <form class="sell-form" id="sellForm">
+                        <h3>List Your Device</h3>
+                        
+                        <div class="form-group">
+                            <label for="deviceType">Device Type</label>
+                            <select id="deviceType" name="deviceType" required>
+                                <option value="">Select device type</option>
+                                <option value="mobile">Mobile Phone</option>
+                                <option value="laptop">Laptop</option>
+                                <option value="tablet">Tablet</option>
+                                <option value="headphones">Headphones/Earphones</option>
+                                <option value="camera">Camera</option>
+                                <option value="gaming">Gaming Console</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="deviceBrand">Brand</label>
+                            <input type="text" id="deviceBrand" name="deviceBrand" placeholder="e.g., Apple, Samsung, Sony" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="deviceModel">Model</label>
+                            <input type="text" id="deviceModel" name="deviceModel" placeholder="e.g., iPhone 12, Galaxy S21" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="deviceCondition">Condition</label>
+                            <select id="deviceCondition" name="deviceCondition" required>
+                                <option value="">Select condition</option>
+                                <option value="excellent">Excellent - Works perfectly</option>
+                                <option value="good">Good - Minor wear</option>
+                                <option value="fair">Fair - Some issues</option>
+                                <option value="poor">Poor - Major issues</option>
+                                <option value="broken">Broken - Not working</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="deviceDescription">Description</label>
+                            <textarea id="deviceDescription" name="deviceDescription" placeholder="Describe the device condition, any defects, included accessories..." rows="4" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="askingPrice">Asking Price (₹)</label>
+                            <input type="number" id="askingPrice" name="askingPrice" placeholder="Enter your expected price" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="deviceImages">Upload Images</label>
+                            <div class="file-upload-area" id="fileUploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload or drag and drop</p>
+                                <p class="file-types">PNG, JPG, JPEG up to 10MB</p>
+                                <input type="file" id="deviceImages" name="deviceImages" multiple accept="image/*" hidden>
+                            </div>
+                            <div class="uploaded-images" id="uploadedImages"></div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-large">
+                            <i class="fas fa-plus"></i>
+                            List Device
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">About EcoWaste</h2>
+                    <p class="section-subtitle">Revolutionizing E-Waste Management</p>
+                    <p>EcoWaste is a revolutionary platform that connects individuals with electronic waste to potential buyers, creating a sustainable ecosystem for device reuse and recycling. Our mission is to reduce electronic waste by giving every device a second chance.</p>
+                    <div class="about-features">
+                        <div class="feature">
+                            <i class="fas fa-leaf"></i>
+                            <div>
+                                <h4>Environmental Impact</h4>
+                                <p>Reduce e-waste and carbon footprint</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-dollar-sign"></i>
+                            <div>
+                                <h4>Earn Money</h4>
+                                <p>Turn your unused devices into cash</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-handshake"></i>
+                            <div>
+                                <h4>Community</h4>
+                                <p>Connect with like-minded individuals</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="circle-animation">
+                        <div class="circle circle-1"></div>
+                        <div class="circle circle-2"></div>
+                        <div class="circle circle-3"></div>
+                        <div class="center-icon">
+                            <i class="fas fa-recycle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2 class="section-title">Get In Touch</h2>
+                    <p class="section-subtitle">Have questions? We'd love to hear from you.</p>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>support@ecowaste.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>+91 98765 43210</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Address</h4>
+                                <p>123 Green Street, Eco City, India</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-recycle"></i>
+                        <span>EcoWaste</span>
+                    </div>
+                    <p>Transforming e-waste into opportunities for a sustainable future.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#marketplace">Marketplace</a></li>
+                        <li><a href="#sell">Sell Device</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get updates on new features and offers.</p>
+                    <div class="newsletter">
+                        <input type="email" placeholder="Enter your email">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EcoWaste. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-btn" data-modal="loginModal">&times;</span>
+            <h2>Sign In</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+            <p class="switch-form">Don't have an account? <a href="#" id="switchToSignup">Sign Up</a></p>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="close-btn" data-modal="signupModal">&times;</span>
+            <h2>Join EcoWaste</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Confirm Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
+            <p class="switch-form">Already have an account? <a href="#" id="switchToLogin">Sign In</a></p>
+        </div>
+    </div>
+
+    <!-- Item Details Modal -->
+    <div class="modal" id="itemModal">
+        <div class="modal-content item-modal-content">
+            <span class="close-btn" data-modal="itemModal">&times;</span>
+            <div class="item-details">
+                <!-- Content will be dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Bid Modal -->
+    <div class="modal" id="bidModal">
+        <div class="modal-content">
+            <span class="close-btn" data-modal="bidModal">&times;</span>
+            <h2>Place Your Bid</h2>
+            <div class="bid-info">
+                <p>Current highest bid: <span class="current-bid">₹0</span></p>
+                <p>Minimum bid: <span class="min-bid">₹0</span></p>
+            </div>
+            <form class="modal-form" id="bidForm">
+                <div class="form-group">
+                    <label for="bidAmount">Your Bid Amount (₹)</label>
+                    <input type="number" id="bidAmount" placeholder="Enter your bid" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="bidMessage">Message (Optional)</label>
+                    <textarea id="bidMessage" placeholder="Add a message to the seller..." rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-large">Place Bid</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <span class="toast-message"></span>
+            <button class="toast-close">&times;</button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

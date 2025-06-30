@@ -48,13 +48,28 @@ class EcoWasteApp {
     }
 
     setupNavigation() {
-        // Smooth scrolling for navigation links
+        // Handle page-based navigation for multi-page site
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        
+        // Highlight current page in navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === currentPage || 
+                (currentPage === 'index.html' && href === 'index.html') ||
+                (currentPage === '' && href === 'index.html')) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling for hash links (for single page navigation if needed)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', (e) => {
                 e.preventDefault();
                 const target = document.querySelector(anchor.getAttribute('href'));
                 if (target) {
-                    const headerHeight = document.querySelector('.header').offsetHeight;
+                    const headerHeight = document.querySelector('.header')?.offsetHeight || 80;
                     const targetPosition = target.offsetTop - headerHeight;
                     
                     window.scrollTo({
@@ -65,11 +80,18 @@ class EcoWasteApp {
             });
         });
 
-        // Active navigation highlighting
+        // Handle scroll effects for single page sections
+        if (currentPage === 'index.html' || currentPage === '') {
+            this.setupScrollHighlight();
+        }
+    }
+
+    setupScrollHighlight() {
+        // Active navigation highlighting for sections (only on home page)
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.nav-link');
-            const headerHeight = document.querySelector('.header').offsetHeight;
+            const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+            const headerHeight = document.querySelector('.header')?.offsetHeight || 80;
             
             let current = '';
             sections.forEach(section => {
@@ -116,21 +138,27 @@ class EcoWasteApp {
         const switchToSignup = document.getElementById('switchToSignup');
         const switchToLogin = document.getElementById('switchToLogin');
 
-        // Open modals
-        signInUpBtn.addEventListener('click', () => this.openModal('loginModal'));
+        // Open modals (only if button exists)
+        if (signInUpBtn) {
+            signInUpBtn.addEventListener('click', () => this.openModal('loginModal'));
+        }
         
-        // Switch between Sign In and signup
-        switchToSignup.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.closeModal('loginModal');
-            this.openModal('signupModal');
-        });
+        // Switch between Sign In and signup (only if elements exist)
+        if (switchToSignup) {
+            switchToSignup.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.closeModal('loginModal');
+                this.openModal('signupModal');
+            });
+        }
         
-        switchToLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.closeModal('signupModal');
-            this.openModal('loginModal');
-        });
+        if (switchToLogin) {
+            switchToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.closeModal('signupModal');
+                this.openModal('loginModal');
+            });
+        }
 
         // Close modals
         document.querySelectorAll('.close-btn').forEach(btn => {
@@ -152,73 +180,102 @@ class EcoWasteApp {
 
     openModal(modalId) {
         const modal = document.getElementById(modalId);
-        modal.classList.add('show');
-        document.body.style.overflow = 'hidden';
+        if (modal) {
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
     }
 
     closeModal(modalId) {
         const modal = document.getElementById(modalId);
-        modal.classList.remove('show');
-        document.body.style.overflow = 'auto';
+        if (modal) {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
     }
 
     setupForms() {
-        // Sell form
+        // Sell form (only if exists)
         const sellForm = document.getElementById('sellForm');
         const fileUploadArea = document.getElementById('fileUploadArea');
         const deviceImages = document.getElementById('deviceImages');
         const uploadedImages = document.getElementById('uploadedImages');
 
-        // File upload functionality
-        fileUploadArea.addEventListener('click', () => deviceImages.click());
-        
-        fileUploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            fileUploadArea.classList.add('drag-over');
-        });
-        
-        fileUploadArea.addEventListener('dragleave', () => {
-            fileUploadArea.classList.remove('drag-over');
-        });
-        
-        fileUploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            fileUploadArea.classList.remove('drag-over');
-            this.handleFiles(e.dataTransfer.files, uploadedImages);
-        });
+        if (sellForm && fileUploadArea && deviceImages && uploadedImages) {
+            // File upload functionality
+            fileUploadArea.addEventListener('click', () => deviceImages.click());
+            
+            fileUploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUploadArea.classList.add('drag-over');
+            });
+            
+            fileUploadArea.addEventListener('dragleave', () => {
+                fileUploadArea.classList.remove('drag-over');
+            });
+            
+            fileUploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileUploadArea.classList.remove('drag-over');
+                this.handleFiles(e.dataTransfer.files, uploadedImages);
+            });
 
-        deviceImages.addEventListener('change', (e) => {
-            this.handleFiles(e.target.files, uploadedImages);
-        });
+            deviceImages.addEventListener('change', (e) => {
+                this.handleFiles(e.target.files, uploadedImages);
+            });
 
-        // Sell form submission
-        sellForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleSellFormSubmission(sellForm);
-        });
+            // Sell form submission
+            sellForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleSellFormSubmission(sellForm);
+            });
+        }
 
-        // Contact form
+        // Contact form (only if exists)
         const contactForm = document.querySelector('.contact-form');
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleContactFormSubmission(contactForm);
-        });
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleContactFormSubmission(contactForm);
+            });
+        }
 
-        // Newsletter subscription
+        // Newsletter subscription (only if exists)
         const newsletter = document.querySelector('.newsletter');
-        newsletter.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleNewsletterSubscription(newsletter);
-        });
+        if (newsletter) {
+            newsletter.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleNewsletterSubscription(newsletter);
+            });
+        }
 
-        // Hero buttons
-        document.getElementById('startSellingBtn').addEventListener('click', () => {
-            document.getElementById('sell').scrollIntoView({ behavior: 'smooth' });
-        });
+        // Hero buttons (only if they exist)
+        const startSellingBtn = document.getElementById('startSellingBtn');
+        const browseBidsBtn = document.getElementById('browseBidsBtn');
+        
+        if (startSellingBtn) {
+            startSellingBtn.addEventListener('click', () => {
+                const sellSection = document.getElementById('sell');
+                if (sellSection) {
+                    sellSection.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    // Redirect to sell page if section doesn't exist
+                    window.location.href = 'sell.html';
+                }
+            });
+        }
 
-        document.getElementById('browseBidsBtn').addEventListener('click', () => {
-            document.getElementById('marketplace').scrollIntoView({ behavior: 'smooth' });
-        });
+        if (browseBidsBtn) {
+            browseBidsBtn.addEventListener('click', () => {
+                const marketplaceSection = document.getElementById('marketplace');
+                if (marketplaceSection) {
+                    marketplaceSection.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    // Redirect to marketplace page if section doesn't exist
+                    window.location.href = 'marketplace.html';
+                }
+            });
+        }
     }
 
     handleFiles(files, container) {
@@ -292,22 +349,28 @@ class EcoWasteApp {
     }
 
     setupMarketplace() {
-        // Filter buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const category = btn.getAttribute('data-category');
-                this.filterItems(category);
-                
-                // Update active button
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+        // Filter buttons (only if they exist)
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        if (filterButtons.length > 0) {
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const category = btn.getAttribute('data-category');
+                    this.filterItems(category);
+                    
+                    // Update active button
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
             });
-        });
+        }
 
-        // Load more button
-        document.getElementById('loadMoreBtn').addEventListener('click', () => {
-            this.loadMoreItems();
-        });
+        // Load more button (only if it exists)
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', () => {
+                this.loadMoreItems();
+            });
+        }
     }
 
     generateMarketplaceItems() {
@@ -377,6 +440,8 @@ class EcoWasteApp {
 
     renderMarketplaceItems() {
         const grid = document.getElementById('marketplaceGrid');
+        if (!grid) return; // Exit if marketplace grid doesn't exist on this page
+        
         const itemsToShow = this.filteredItems.slice(0, this.currentPage * this.itemsPerPage);
         
         grid.innerHTML = itemsToShow.map(item => this.createMarketplaceItemHTML(item)).join('');
@@ -391,10 +456,12 @@ class EcoWasteApp {
         
         // Update load more button
         const loadMoreBtn = document.getElementById('loadMoreBtn');
-        if (itemsToShow.length >= this.filteredItems.length) {
-            loadMoreBtn.style.display = 'none';
-        } else {
-            loadMoreBtn.style.display = 'block';
+        if (loadMoreBtn) {
+            if (itemsToShow.length >= this.filteredItems.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'block';
+            }
         }
     }
 
@@ -459,7 +526,10 @@ class EcoWasteApp {
         if (!item) return;
 
         const modal = document.getElementById('itemModal');
+        if (!modal) return; // Exit if modal doesn't exist on this page
+        
         const detailsContainer = modal.querySelector('.item-details');
+        if (!detailsContainer) return; // Exit if details container doesn't exist
         
         detailsContainer.innerHTML = `
             <div class="item-detail-header">
@@ -501,9 +571,15 @@ class EcoWasteApp {
         this.closeModal('itemModal');
         
         const modal = document.getElementById('bidModal');
+        if (!modal) return; // Exit if modal doesn't exist on this page
+        
         const currentBidSpan = modal.querySelector('.current-bid');
         const minBidSpan = modal.querySelector('.min-bid');
         const bidForm = document.getElementById('bidForm');
+        const bidAmountInput = document.getElementById('bidAmount');
+        
+        // Check if all required elements exist
+        if (!currentBidSpan || !minBidSpan || !bidForm || !bidAmountInput) return;
         
         const currentBid = item.currentBid > 0 ? item.currentBid : item.price;
         const minBid = currentBid + 100;
@@ -511,8 +587,8 @@ class EcoWasteApp {
         currentBidSpan.textContent = `₹${currentBid.toLocaleString()}`;
         minBidSpan.textContent = `₹${minBid.toLocaleString()}`;
         
-        document.getElementById('bidAmount').min = minBid;
-        document.getElementById('bidAmount').value = minBid;
+        bidAmountInput.min = minBid;
+        bidAmountInput.value = minBid;
         
         // Setup bid form submission
         bidForm.onsubmit = (e) => {
@@ -547,18 +623,26 @@ class EcoWasteApp {
         this.showToast('Redirecting to contact form...', 'info');
         
         setTimeout(() => {
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            const contactSection = document.getElementById('contact');
+            if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                // Redirect to contact page if section doesn't exist
+                window.location.href = 'contact.html';
+            }
         }, 1000);
     }
 
     setupScrollEffects() {
-        // Parallax effect for hero
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.hero-background');
-            const speed = scrolled * 0.5;
-            parallax.style.transform = `translateY(${speed}px)`;
-        });
+        // Parallax effect for hero (only if hero background exists)
+        const parallaxElement = document.querySelector('.hero-background');
+        if (parallaxElement) {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const speed = scrolled * 0.5;
+                parallaxElement.style.transform = `translateY(${speed}px)`;
+            });
+        }
 
         // Fade-in animation for sections
         const observerOptions = {
@@ -574,9 +658,12 @@ class EcoWasteApp {
             });
         }, observerOptions);
 
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
+        const sections = document.querySelectorAll('section');
+        if (sections.length > 0) {
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        }
     }
 
     setupAnimations() {
@@ -591,9 +678,12 @@ class EcoWasteApp {
             threshold: 0.1
         });
 
-        document.querySelectorAll('.stat-card, .marketplace-item, .step, .feature, .contact-method, .footer-section').forEach(el => {
-            observer.observe(el);
-        });
+        const animatedElements = document.querySelectorAll('.stat-card, .marketplace-item, .step, .feature, .contact-method, .footer-section');
+        if (animatedElements.length > 0) {
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+        }
     }
 
     initHeroCanvas() {
@@ -764,8 +854,12 @@ class EcoWasteApp {
 
     showToast(message, type = 'info') {
         const toast = document.getElementById('toast');
+        if (!toast) return; // Exit if toast element doesn't exist
+        
         const messageElement = toast.querySelector('.toast-message');
         const closeBtn = toast.querySelector('.toast-close');
+        
+        if (!messageElement) return; // Exit if message element doesn't exist
         
         messageElement.textContent = message;
         
@@ -781,17 +875,22 @@ class EcoWasteApp {
             toast.classList.remove('show');
         }, 4000);
         
-        // Manual close
-        closeBtn.onclick = () => {
-            clearTimeout(autoHide);
-            toast.classList.remove('show');
-        };
+        // Manual close (only if close button exists)
+        if (closeBtn) {
+            closeBtn.onclick = () => {
+                clearTimeout(autoHide);
+                toast.classList.remove('show');
+            };
+        }
     }
 }
 
-// Initialize app when DOM is loaded
+// Initialize app when DOM is loaded (only if components.js is not present)
 document.addEventListener('DOMContentLoaded', () => {
-    window.app = new EcoWasteApp();
+    // Only auto-initialize if ComponentLoader is not available
+    if (typeof ComponentLoader === 'undefined') {
+        window.app = new EcoWasteApp();
+    }
 });
 
 // Additional utility functions
