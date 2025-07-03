@@ -5,20 +5,12 @@ class EcoWasteApp {
     constructor() {
         this.init();
         this.setupEventListeners();
-        this.generateMarketplaceItems();
         this.setupAnimations();
         this.initHeroCanvas();
     }
 
     init() {
         // Initialize app state
-        this.marketplaceItems = [];
-        this.filteredItems = [];
-        this.currentFilter = 'all';
-        this.itemsPerPage = 6;
-        this.currentPage = 1;
-        this.searchQuery = '';
-        this.sortOrder = 'newest';
         this.typewriterText = ['Treasure', 'Cash', 'Value', 'Opportunity'];
         this.typewriterIndex = 0;
         this.charIndex = 0;
@@ -38,12 +30,6 @@ class EcoWasteApp {
         
         // Forms
         this.setupForms();
-        
-        // Marketplace
-        this.setupMarketplace();
-        
-        // Featured Listings
-        this.setupFeaturedListings();
         
         // Scroll effects
         this.setupScrollEffects();
@@ -121,20 +107,22 @@ class EcoWasteApp {
         const navMenu = document.querySelector('.nav-menu');
         const navActions = document.querySelector('.nav-actions');
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            navActions.classList.toggle('active');
-        });
-
-        // Close menu when clicking on a link
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-                navActions.classList.remove('active');
+        if (hamburger && navMenu && navActions) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                navActions.classList.toggle('active');
             });
-        });
+
+            // Close menu when clicking on a link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    navActions.classList.remove('active');
+                });
+            });
+        }
     }
 
     setupModals() {
@@ -145,7 +133,12 @@ class EcoWasteApp {
 
         // Open modals (only if button exists)
         if (signInUpBtn) {
-            signInUpBtn.addEventListener('click', () => this.openModal('loginModal'));
+            signInUpBtn.addEventListener('click', () => {
+                const modal = document.getElementById('auth-modal');
+                if (modal) {
+                    modal.classList.add('show');
+                }
+            });
         }
         
         // Switch between Sign In and signup (only if elements exist)
@@ -179,6 +172,43 @@ class EcoWasteApp {
                 if (e.target === modal) {
                     this.closeModal(modal.id);
                 }
+            });
+        });
+
+        // Modal functionality
+        const authModal = document.getElementById('auth-modal');
+        const openModalButtons = document.querySelectorAll('[data-modal="auth"]');
+        const closeModalButton = document.querySelector('.close-modal');
+        const tabButtons = document.querySelectorAll('.tab-btn');
+
+        // Open modal
+        openModalButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                authModal.classList.add('show');
+            });
+        });
+
+        // Close modal
+        closeModalButton.addEventListener('click', () => {
+            authModal.classList.remove('show');
+        });
+
+        // Tab switching
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                
+                // Show the selected tab content
+                const tabId = button.getAttribute('data-tab') + '-tab';
+                document.getElementById(tabId).style.display = 'block';
             });
         });
     }
@@ -272,15 +302,45 @@ class EcoWasteApp {
 
         if (browseBidsBtn) {
             browseBidsBtn.addEventListener('click', () => {
-                const marketplaceSection = document.getElementById('marketplace');
-                if (marketplaceSection) {
-                    marketplaceSection.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    // Redirect to marketplace page if section doesn't exist
-                    window.location.href = 'marketplace.html';
-                }
+                // Redirect to the sell page as marketplace is removed
+                window.location.href = 'sell.html';
             });
         }
+
+        // Sign-in/sign-up form submission
+        document.getElementById('signin-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get selected role
+            const role = document.querySelector('input[name="role"]:checked').value;
+            
+            // Store user role
+            localStorage.setItem('userRole', role);
+            
+            // Redirect to appropriate dashboard
+            if (role === 'seller') {
+                window.location.href = 'seller-dashboard.html';
+            } else {
+                window.location.href = 'buyer-dashboard.html';
+            }
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get selected role
+            const role = document.querySelector('input[name="role"]:checked').value;
+            
+            // Store user role
+            localStorage.setItem('userRole', role);
+            
+            // Redirect to appropriate dashboard
+            if (role === 'seller') {
+                window.location.href = 'seller-dashboard.html';
+            } else {
+                window.location.href = 'buyer-dashboard.html';
+            }
+        });
     }
 
     handleFiles(files, container) {
@@ -318,20 +378,12 @@ class EcoWasteApp {
             createdAt: new Date().toISOString()
         };
 
-        // Add to marketplace
-        this.marketplaceItems.unshift(deviceData);
-        this.filterItems(this.currentFilter);
-        this.renderMarketplaceItems();
-
-        // Show success message
-        this.showToast('Device listed successfully! Buyers can now place bids.', 'success');
+        // Since marketplace is removed, just show a generic success message
+        this.showToast('Device listed successfully!', 'success');
         
         // Reset form
         form.reset();
         document.getElementById('uploadedImages').innerHTML = '';
-        
-        // Scroll to marketplace
-        document.getElementById('marketplace').scrollIntoView({ behavior: 'smooth' });
     }
 
     handleContactFormSubmission(form) {
@@ -350,341 +402,6 @@ class EcoWasteApp {
         setTimeout(() => {
             this.showToast('Successfully subscribed to newsletter!', 'success');
             form.reset();
-        }, 1000);
-    }
-
-    setupMarketplace() {
-        // Filter buttons (only if they exist)
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        if (filterButtons.length > 0) {
-            filterButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const category = btn.getAttribute('data-category');
-                    this.filterItems(category);
-                    
-                    // Update active button
-                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                });
-            });
-        }
-
-        // Search bar
-        const searchBar = document.getElementById('searchBar');
-        if (searchBar) {
-            searchBar.addEventListener('input', this.debounce((e) => {
-                this.searchQuery = e.target.value.toLowerCase();
-                this.applyFilters();
-            }, 300));
-        }
-
-        // Sort options
-        const sortOptions = document.getElementById('sortOptions');
-        if (sortOptions) {
-            sortOptions.addEventListener('change', (e) => {
-                this.sortOrder = e.target.value;
-                this.applyFilters();
-            });
-        }
-
-        // Load more button (only if it exists)
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
-        if (loadMoreBtn) {
-            loadMoreBtn.addEventListener('click', () => {
-                this.loadMoreItems();
-            });
-        }
-
-        this.filterItems('all');
-    }
-
-    generateMarketplaceItems() {
-        const categories = ['mobile', 'audio', 'computing', 'gaming'];
-        const brands = {
-            mobile: ['Apple', 'Samsung', 'OnePlus', 'Xiaomi', 'Google'],
-            audio: ['Sony', 'Bose', 'Audio-Technica', 'Sennheiser', 'JBL'],
-            computing: ['Apple', 'Dell', 'HP', 'Lenovo', 'ASUS'],
-            gaming: ['Sony', 'Microsoft', 'Nintendo', 'Razer', 'Logitech']
-        };
-        
-        const models = {
-            mobile: ['iPhone 12', 'Galaxy S21', 'OnePlus 9', 'Mi 11', 'Pixel 6'],
-            audio: ['WH-1000XM4', 'QuietComfort 35', 'ATH-M50x', 'HD 660S', 'Flip 5'],
-            computing: ['MacBook Pro', 'XPS 13', 'Pavilion', 'ThinkPad', 'ZenBook'],
-            gaming: ['PlayStation 5', 'Xbox Series X', 'Switch OLED', 'DeathAdder', 'G Pro']
-        };
-        
-        const conditions = ['excellent', 'good', 'fair', 'poor', 'broken'];
-        const descriptions = [
-            'Gently used device in great condition. All original accessories included.',
-            'Device has minor wear but works perfectly. No major scratches or damage.',
-            'Some signs of use but fully functional. Perfect for parts or repair.',
-            'Device has issues but could be valuable for parts or refurbishment.',
-            'Not working but contains valuable components for repair shops.'
-        ];
-
-        // Generate 20 sample items
-        for (let i = 0; i < 20; i++) {
-            const category = categories[Math.floor(Math.random() * categories.length)];
-            const brand = brands[category][Math.floor(Math.random() * brands[category].length)];
-            const model = models[category][Math.floor(Math.random() * models[category].length)];
-            const condition = conditions[Math.floor(Math.random() * conditions.length)];
-            const basePrice = Math.floor(Math.random() * 50000) + 1000;
-            const bidCount = Math.floor(Math.random() * 15);
-
-            this.marketplaceItems.push({
-                id: Date.now() + i,
-                category,
-                brand,
-                model,
-                condition,
-                description: descriptions[Math.floor(Math.random() * descriptions.length)],
-                price: basePrice,
-                currentBid: bidCount > 0 ? basePrice + Math.floor(Math.random() * 5000) : 0,
-                bidCount,
-                images: [],
-                createdAt: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString()
-            });
-        }
-
-        this.filterItems('all');
-    }
-
-    applyFilters() {
-        let items = [...this.marketplaceItems];
-
-        // Filter by category
-        if (this.currentFilter !== 'all') {
-            items = items.filter(item => item.category === this.currentFilter);
-        }
-
-        // Filter by search query
-        if (this.searchQuery) {
-            items = items.filter(item => 
-                item.brand.toLowerCase().includes(this.searchQuery) ||
-                item.model.toLowerCase().includes(this.searchQuery) ||
-                item.description.toLowerCase().includes(this.searchQuery)
-            );
-        }
-
-        // Sort items
-        const conditionOrder = ['excellent', 'good', 'fair', 'poor', 'broken'];
-        items.sort((a, b) => {
-            switch (this.sortOrder) {
-                case 'price-asc':
-                    return (a.currentBid || a.price) - (b.currentBid || b.price);
-                case 'price-desc':
-                    return (b.currentBid || b.price) - (a.currentBid || a.price);
-                case 'condition':
-                    return conditionOrder.indexOf(a.condition) - conditionOrder.indexOf(b.condition);
-                case 'newest':
-                default:
-                    return new Date(b.createdAt) - new Date(a.createdAt);
-            }
-        });
-
-        this.filteredItems = items;
-        this.currentPage = 1;
-        this.renderMarketplaceItems();
-    }
-
-    filterItems(category) {
-        this.currentFilter = category;
-        this.applyFilters();
-    }
-
-    renderMarketplaceItems() {
-        const grid = document.getElementById('marketplaceGrid');
-        if (!grid) return; // Exit if marketplace grid doesn't exist on this page
-        
-        const itemsToShow = this.filteredItems.slice(0, this.currentPage * this.itemsPerPage);
-        
-        grid.innerHTML = itemsToShow.map(item => this.createMarketplaceItemHTML(item)).join('');
-        
-        // Setup item click handlers
-        document.querySelectorAll('.marketplace-item').forEach(element => {
-            element.addEventListener('click', () => {
-                const itemId = parseInt(element.getAttribute('data-id'));
-                this.showItemDetails(itemId);
-            });
-        });
-        
-        // Update load more button
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
-        if (loadMoreBtn) {
-            if (itemsToShow.length >= this.filteredItems.length) {
-                loadMoreBtn.style.display = 'none';
-            } else {
-                loadMoreBtn.style.display = 'block';
-            }
-        }
-    }
-
-    createMarketplaceItemHTML(item) {
-        const icon = this.getDeviceIcon(item.category);
-        const timeAgo = this.getTimeAgo(new Date(item.createdAt));
-        
-        return `
-            <div class="marketplace-item" data-id="${item.id}">
-                <div class="item-image">
-                    <i class="${icon}"></i>
-                </div>
-                <div class="item-content">
-                    <div class="item-header">
-                        <h3 class="item-title">${item.brand} ${item.model}</h3>
-                        <span class="item-condition condition-${item.condition}">${item.condition}</span>
-                    </div>
-                    <p class="item-description">${item.description}</p>
-                    <div class="item-footer">
-                        <div class="item-price">₹${item.currentBid > 0 ? item.currentBid.toLocaleString() : item.price.toLocaleString()}</div>
-                        <div class="bid-count">
-                            <i class="fas fa-gavel"></i>
-                            ${item.bidCount} bid${item.bidCount !== 1 ? 's' : ''}
-                        </div>
-                    </div>
-                    <div class="item-meta">
-                        <small>Listed ${timeAgo}</small>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    getDeviceIcon(category) {
-        const icons = {
-            mobile: 'fas fa-mobile-alt',
-            audio: 'fas fa-headphones',
-            computing: 'fas fa-laptop',
-            gaming: 'fas fa-gamepad'
-        };
-        return icons[category] || 'fas fa-microchip';
-    }
-
-    getTimeAgo(date) {
-        const now = new Date();
-        const diffTime = Math.abs(now - date);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        
-        if (diffDays === 1) return '1 day ago';
-        if (diffDays < 7) return `${diffDays} days ago`;
-        if (diffDays < 30) return `${Math.floor(diffDays / 7)} week${Math.floor(diffDays / 7) !== 1 ? 's' : ''} ago`;
-        return `${Math.floor(diffDays / 30)} month${Math.floor(diffDays / 30) !== 1 ? 's' : ''} ago`;
-    }
-
-    loadMoreItems() {
-        this.currentPage++;
-        this.renderMarketplaceItems();
-    }
-
-    showItemDetails(itemId) {
-        const item = this.marketplaceItems.find(i => i.id === itemId);
-        if (!item) return;
-
-        const modal = document.getElementById('itemModal');
-        if (!modal) return; // Exit if modal doesn't exist on this page
-        
-        const detailsContainer = modal.querySelector('.item-details');
-        if (!detailsContainer) return; // Exit if details container doesn't exist
-        
-        detailsContainer.innerHTML = `
-            <div class="item-detail-header">
-                <h2>${item.brand} ${item.model}</h2>
-                <span class="item-condition condition-${item.condition}">${item.condition}</span>
-            </div>
-            <div class="item-detail-content">
-                <div class="item-detail-image">
-                    <i class="${this.getDeviceIcon(item.category)}"></i>
-                </div>
-                <div class="item-detail-info">
-                    <p><strong>Category:</strong> ${item.category}</p>
-                    <p><strong>Condition:</strong> ${item.condition}</p>
-                    <p><strong>Description:</strong> ${item.description}</p>
-                    <p><strong>Asking Price:</strong> ₹${item.price.toLocaleString()}</p>
-                    ${item.currentBid > 0 ? `<p><strong>Current Highest Bid:</strong> ₹${item.currentBid.toLocaleString()}</p>` : ''}
-                    <p><strong>Total Bids:</strong> ${item.bidCount}</p>
-                </div>
-            </div>
-            <div class="item-actions">
-                <button class="btn btn-primary" onclick="app.showBidModal(${item.id})">
-                    <i class="fas fa-gavel"></i>
-                    Place Bid
-                </button>
-                <button class="btn btn-secondary" onclick="app.contactSeller(${item.id})">
-                    <i class="fas fa-envelope"></i>
-                    Contact Seller
-                </button>
-            </div>
-        `;
-        
-        this.openModal('itemModal');
-    }
-
-    showBidModal(itemId) {
-        const item = this.marketplaceItems.find(i => i.id === itemId);
-        if (!item) return;
-
-        this.closeModal('itemModal');
-        
-        const modal = document.getElementById('bidModal');
-        if (!modal) return; // Exit if modal doesn't exist on this page
-        
-        const currentBidSpan = modal.querySelector('.current-bid');
-        const minBidSpan = modal.querySelector('.min-bid');
-        const bidForm = document.getElementById('bidForm');
-        const bidAmountInput = document.getElementById('bidAmount');
-        
-        // Check if all required elements exist
-        if (!currentBidSpan || !minBidSpan || !bidForm || !bidAmountInput) return;
-        
-        const currentBid = item.currentBid > 0 ? item.currentBid : item.price;
-        const minBid = currentBid + 100;
-        
-        currentBidSpan.textContent = `₹${currentBid.toLocaleString()}`;
-        minBidSpan.textContent = `₹${minBid.toLocaleString()}`;
-        
-        bidAmountInput.min = minBid;
-        bidAmountInput.value = minBid;
-        
-        // Setup bid form submission
-        bidForm.onsubmit = (e) => {
-            e.preventDefault();
-            this.handleBidSubmission(itemId, bidForm);
-        };
-        
-        this.openModal('bidModal');
-    }
-
-    handleBidSubmission(itemId, form) {
-        const formData = new FormData(form);
-        const bidAmount = parseInt(formData.get('bidAmount'));
-        const bidMessage = formData.get('bidMessage');
-        
-        const item = this.marketplaceItems.find(i => i.id === itemId);
-        if (!item) return;
-        
-        // Update item with new bid
-        item.currentBid = bidAmount;
-        item.bidCount++;
-        
-        this.showToast('Bid placed successfully! The seller will be notified.', 'success');
-        this.closeModal('bidModal');
-        this.renderMarketplaceItems();
-        
-        form.reset();
-    }
-
-    contactSeller(itemId) {
-        this.closeModal('itemModal');
-        this.showToast('Redirecting to contact form...', 'info');
-        
-        setTimeout(() => {
-            const contactSection = document.getElementById('contact');
-            if (contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                // Redirect to contact page if section doesn't exist
-                window.location.href = 'contact.html';
-            }
         }, 1000);
     }
 
@@ -733,7 +450,7 @@ class EcoWasteApp {
             threshold: 0.1
         });
 
-        const animatedElements = document.querySelectorAll('.stat-card, .marketplace-item, .step, .feature, .contact-method, .footer-section');
+        const animatedElements = document.querySelectorAll('.stat-card, .step, .feature, .contact-method, .footer-section');
         if (animatedElements.length > 0) {
             animatedElements.forEach(el => {
                 observer.observe(el);
@@ -936,20 +653,6 @@ class EcoWasteApp {
                 clearTimeout(autoHide);
                 toast.classList.remove('show');
             };
-        }
-    }
-
-    setupFeaturedListings() {
-        const grid = document.getElementById('featuredListingsGrid');
-        if (!grid) return;
-
-        // Use the first 4 items from the marketplace as featured items
-        const featuredItems = this.marketplaceItems.slice(0, 4);
-        
-        if (featuredItems.length > 0) {
-            grid.innerHTML = featuredItems.map(item => this.createMarketplaceItemHTML(item)).join('');
-        } else {
-            grid.innerHTML = '<p>No featured items available at the moment.</p>';
         }
     }
 }

@@ -1,0 +1,242 @@
+/* Buyer Dashboard Styles - Enhanced */
+body {
+    font-family: var(--font-primary, 'Roboto', sans-serif);
+    margin: 0;
+    padding: 0;
+    background: var(--bg-primary, #fafbfa);
+    color: var(--text-primary, #2c3e2f);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+header {
+    background: var(--gradient-primary, linear-gradient(135deg, #4a7c8c, #c77b3a));
+    color: var(--text-inverse, #fff);
+    padding: 2rem 2rem 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom-left-radius: 32px;
+    box-shadow: 0 4px 24px rgba(74,124,140,0.10);
+    animation: slideDown 0.7s cubic-bezier(.77,0,.18,1) 0.1s both;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-60px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+nav a {
+    color: var(--text-inverse, #fff);
+    text-decoration: none;
+    margin-left: 2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+}
+nav a:hover {
+    color: var(--accent-warm, #c77b3a);
+}
+
+main {
+    padding: 2.5rem 1rem 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 1s ease 0.2s both;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dashboard-title {
+    font-family: var(--font-heading, 'Poppins', sans-serif);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--secondary-color, #4a7c8c);
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(74,124,140,0.08);
+}
+
+section {
+    background: var(--bg-secondary, #f1f5f2);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(74,124,140,0.08);
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 1.2s cubic-bezier(.77,0,.18,1) both;
+}
+
+section::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    background: var(--accent-warm, #c77b3a);
+    opacity: 0.07;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.search-bar {
+    display: flex;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(74,124,140,0.07);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-primary, #fafbfa);
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    font-size: 1rem;
+    background: transparent;
+    outline: none;
+}
+
+.search-bar button {
+    padding: 0.75rem 1.5rem;
+    background: var(--secondary-color, #4a7c8c);
+    color: #fff;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+.search-bar button:hover {
+    background: var(--accent-warm, #c77b3a);
+}
+
+.filters {
+    display: flex;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+
+.filters select {
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--border-color, #c9d6cb);
+    border-radius: 6px;
+    font-size: 1rem;
+    background: var(--bg-primary, #fafbfa);
+    transition: border 0.2s;
+}
+.filters select:focus {
+    border-color: var(--secondary-color, #4a7c8c);
+}
+
+.items-container, .offers-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.item-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 16px rgba(74,124,140,0.10);
+    padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+    transition: transform 0.25s var(--transition-medium, cubic-bezier(.77,0,.18,1)), box-shadow 0.25s;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    animation: cardFadeIn 0.7s cubic-bezier(.77,0,.18,1) both;
+}
+@keyframes cardFadeIn {
+    from { opacity: 0; transform: translateY(40px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.item-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 32px rgba(74,124,140,0.18);
+    border: 1.5px solid var(--accent-warm, #c77b3a);
+}
+
+.item-card h3 {
+    color: var(--secondary-color, #4a7c8c);
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+.item-card p {
+    color: var(--text-secondary, #5a6b5c);
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+}
+.item-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+.item-actions button {
+    background: var(--accent-warm, #c77b3a);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 1px 4px rgba(74,124,140,0.10);
+}
+.item-actions button:hover {
+    background: var(--secondary-color, #4a7c8c);
+    transform: scale(1.07);
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--secondary-dark, #2c4a54);
+    color: #fff;
+    border-top-right-radius: 32px;
+    box-shadow: 0 -2px 16px rgba(74,124,140,0.10);
+    margin-top: 2rem;
+}
+
+/* Animations for dashboard load */
+.items-container .item-card {
+    opacity: 0;
+    animation: cardFadeIn 0.7s cubic-bezier(.77,0,.18,1) forwards;
+}
+.items-container .item-card:nth-child(1) { animation-delay: 0.1s; }
+.items-container .item-card:nth-child(2) { animation-delay: 0.2s; }
+.items-container .item-card:nth-child(3) { animation-delay: 0.3s; }
+.items-container .item-card:nth-child(4) { animation-delay: 0.4s; }
+.items-container .item-card:nth-child(5) { animation-delay: 0.5s; }
+
+/* Responsive */
+@media (max-width: 900px) {
+    .items-container, .offers-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        padding: 1.2rem 1rem;
+        border-bottom-left-radius: 18px;
+    }
+    .dashboard-title {
+        font-size: 2rem;
+    }
+    .items-container, .offers-container {
+        grid-template-columns: 1fr;
+    }
+    section {
+        padding: 1.2rem 0.7rem;
+    }
+}

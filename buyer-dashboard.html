@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Dashboard - EcoWaste</title>
+    <link rel="stylesheet" href="css/buyer-dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Buyer Dashboard</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#marketplace">Marketplace</a>
+            <a href="#offers">My Offers</a>
+            <a href="#purchases">Purchases</a>
+            <button id="logout-btn">Logout</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="marketplace">
+            <h2>E-Waste Marketplace</h2>
+            <div class="search-bar">
+                <input type="text" placeholder="Search items...">
+                <button>Search</button>
+            </div>
+            <div class="filters">
+                <select>
+                    <option>All Categories</option>
+                    <option>Mobile</option>
+                    <option>Laptop</option>
+                    <option>Speaker</option>
+                </select>
+                <select>
+                    <option>Any Condition</option>
+                    <option>New</option>
+                    <option>Good</option>
+                    <option>Fair</option>
+                </select>
+            </div>
+            <div class="items-container"><!-- Items will be populated via JS --></div>
+        </section>
+
+        <section id="offers">
+            <h2>My Offers</h2>
+            <div class="offers-container"><!-- Offers will be populated via JS --></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>EcoWaste &copy; 2025 - Connecting e-waste with new life</p>
+    </footer>
+
+    <script>
+        // Check user role
+        if (localStorage.getItem('userRole') !== 'buyer') {
+            window.location.href = 'index.html';
+        }
+        
+        // Logout functionality
+        var logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function() {
+                localStorage.removeItem('userRole');
+                window.location.href = 'index.html';
+            });
+        }
+    </script>
+
+    <script src="js/buyer-dashboard.js"></script>
+</body>
+</html>

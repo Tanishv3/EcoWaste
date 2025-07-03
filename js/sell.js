@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         currentStepFields.forEach(field => {
             if (!field.value.trim()) {
                 // You can add more sophisticated validation feedback here
-                console.error(`${field.name} is required.`);
                 field.style.borderColor = 'var(--error-color)';
                 isValid = false;
             } else {

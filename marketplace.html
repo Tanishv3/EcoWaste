@@ -14,12 +14,11 @@
     <!-- Header Component Placeholder -->
     <div id="header-placeholder"></div>
 
-    <!-- Page Header -->
     <section class="page-header">
         <div class="container">
             <div class="page-header-content">
                 <h1 class="page-title">Marketplace</h1>
-                <p class="page-subtitle">Discover electronics waiting for their second life</p>
+                <p class="page-subtitle">Browse and buy pre-owned electronics sustainably</p>
                 <nav class="breadcrumb">
                     <a href="index.html">Home</a>
                     <span>/</span>
@@ -29,39 +28,53 @@
         </div>
     </section>
 
-    <!-- Marketplace Section -->
-    <section class="marketplace">
+    <section class="marketplace-section">
         <div class="container">
-            <div class="marketplace-header">
-                <div class="search-bar-container">
-                    <input type="search" id="searchBar" class="search-bar" placeholder="Search for devices, brands, or models...">
-                    <i class="fas fa-search search-icon"></i>
+            <div class="marketplace-grid">
+                <!-- Example product cards -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80" alt="Used Smartphone">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Used Smartphone</h3>
+                        <p class="product-description">Good condition, 64GB, unlocked, eco-friendly packaging.</p>
+                        <div class="product-meta">
+                            <span class="product-price">₹4,500</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Delhi</span>
+                        </div>
+                        <button class="btn btn-primary">View Details</button>
+                    </div>
                 </div>
-                <div class="sort-options-container">
-                    <label for="sortOptions">Sort by:</label>
-                    <select id="sortOptions" class="sort-options">
-                        <option value="newest">Newest</option>
-                        <option value="price-asc">Price: Low to High</option>
-                        <option value="price-desc">Price: High to Low</option>
-                        <option value="condition">Condition</option>
-                    </select>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80" alt="Laptop">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Laptop</h3>
+                        <p class="product-description">Refurbished, 8GB RAM, SSD, 1-year warranty.</p>
+                        <div class="product-meta">
+                            <span class="product-price">₹15,000</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Mumbai</span>
+                        </div>
+                        <button class="btn btn-primary">View Details</button>
+                    </div>
                 </div>
-            </div>
-
-            <div class="marketplace-filters">
-                <button class="filter-btn active" data-category="all">All Items</button>
-                <button class="filter-btn" data-category="mobile">Mobile Phones</button>
-                <button class="filter-btn" data-category="audio">Audio Devices</button>
-                <button class="filter-btn" data-category="computing">Computing</button>
-                <button class="filter-btn" data-category="gaming">Gaming</button>
-            </div>
-
-            <div class="marketplace-grid" id="marketplaceGrid">
-                <!-- Items will be dynamically loaded here -->
-            </div>
-
-            <div class="load-more-container">
-                <button class="btn btn-outline" id="loadMoreBtn">Load More Items</button>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Tablet">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Tablet</h3>
+                        <p class="product-description">Slightly used, 10-inch display, Wi-Fi only.</p>
+                        <div class="product-meta">
+                            <span class="product-price">₹6,000</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Bengaluru</span>
+                        </div>
+                        <button class="btn btn-primary">View Details</button>
+                    </div>
+                </div>
+                <!-- Add more product cards as needed -->
             </div>
         </div>
     </section>
@@ -69,91 +82,6 @@
     <!-- Footer Component Placeholder -->
     <div id="footer-placeholder"></div>
 
-    <!-- Modals -->
-    <!-- Login Modal -->
-    <div class="modal" id="loginModal">
-        <div class="modal-content">
-            <span class="close-btn" data-modal="loginModal">&times;</span>
-            <h2>Sign In</h2>
-            <form id="loginForm">
-                <div class="form-group">
-                    <input type="email" placeholder="Email" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Password" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Sign In</button>
-            </form>
-            <p class="switch-form">Don't have an account? <a href="#" id="switchToSignup">Sign Up</a></p>
-        </div>
-    </div>
-
-    <!-- Signup Modal -->
-    <div class="modal" id="signupModal">
-        <div class="modal-content">
-            <span class="close-btn" data-modal="signupModal">&times;</span>
-            <h2>Join EcoWaste</h2>
-            <form id="signupForm">
-                <div class="form-group">
-                    <input type="text" placeholder="Full Name" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" placeholder="Email" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Password" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Confirm Password" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Sign Up</button>
-            </form>
-            <p class="switch-form">Already have an account? <a href="#" id="switchToLogin">Sign In</a></p>
-        </div>
-    </div>
-
-    <!-- Item Details Modal -->
-    <div class="modal" id="itemModal">
-        <div class="modal-content item-modal-content">
-            <span class="close-btn" data-modal="itemModal">&times;</span>
-            <div class="item-details">
-                <!-- Content will be dynamically loaded -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Bid Modal -->
-    <div class="modal" id="bidModal">
-        <div class="modal-content">
-            <span class="close-btn" data-modal="bidModal">&times;</span>
-            <h2>Place Your Bid</h2>
-            <div class="bid-info">
-                <p>Current highest bid: <span class="current-bid">₹0</span></p>
-                <p>Minimum bid: <span class="min-bid">₹0</span></p>
-            </div>
-            <form class="modal-form" id="bidForm">
-                <div class="form-group">
-                    <label for="bidAmount">Your Bid Amount (₹)</label>
-                    <input type="number" id="bidAmount" name="bidAmount" required min="0">
-                </div>
-                <div class="form-group">
-                    <label for="bidMessage">Message (Optional)</label>
-                    <textarea id="bidMessage" name="bidMessage" placeholder="Add a message to the seller..." rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Place Bid</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">
-        <div class="toast-content">
-            <span class="toast-message"></span>
-            <button class="toast-close">&times;</button>
-        </div>
-    </div>
-
-    <!-- Scripts -->
     <script src="js/components.js"></script>
     <script src="js/main.js"></script>
 </body>

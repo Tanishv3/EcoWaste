@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EcoWaste - Sustainable E-Waste Solutions</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -33,9 +36,9 @@
                         <i class="fas fa-plus"></i>
                         Start Selling
                     </a>
-                    <a href="marketplace.html" class="btn btn-outline btn-large">
+                    <a href="sell.html" class="btn btn-outline btn-large">
                         <i class="fas fa-search"></i>
-                        Browse Marketplace
+                        Browse Devices
                     </a>
                 </div>
             </div>
@@ -102,9 +105,9 @@
                     <div class="preview-icon">
                         <i class="fas fa-search"></i>
                     </div>
-                    <h3>Browse Marketplace</h3>
+                    <h3>Browse Devices</h3>
                     <p>Discover electronics available for purchase or bid</p>
-                    <a href="marketplace.html" class="btn btn-outline">Explore Items</a>
+                    <a href="sell.html" class="btn btn-outline">Explore Items</a>
                 </div>
                 <div class="preview-card">
                     <div class="preview-icon">
@@ -114,22 +117,6 @@
                     <p>Understand our mission and environmental impact</p>
                     <a href="about.html" class="btn btn-outline">About Us</a>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Listings Section -->
-    <section class="featured-listings-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Featured Listings</h2>
-                <p class="section-subtitle">Freshly listed devices from our community</p>
-            </div>
-            <div class="featured-listings-grid" id="featuredListingsGrid">
-                <!-- Featured items will be dynamically loaded here -->
-            </div>
-            <div class="text-center">
-                <a href="marketplace.html" class="btn btn-primary">View All Listings</a>
             </div>
         </div>
     </section>
@@ -168,57 +155,6 @@
 
     <!-- Footer Component Placeholder -->
     <div id="footer-placeholder"></div>
-
-    <!-- Modals -->
-    <!-- Login Modal -->
-    <div class="modal" id="loginModal">
-        <div class="modal-content">
-            <span class="close-btn" data-modal="loginModal">&times;</span>
-            <h2>Sign In</h2>
-            <form id="loginForm">
-                <div class="form-group">
-                    <input type="email" placeholder="Email" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Password" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Sign In</button>
-            </form>
-            <p class="switch-form">Don't have an account? <a href="#" id="switchToSignup">Sign Up</a></p>
-        </div>
-    </div>
-
-    <!-- Signup Modal -->
-    <div class="modal" id="signupModal">
-        <div class="modal-content">
-            <span class="close-btn" data-modal="signupModal">&times;</span>
-            <h2>Join EcoWaste</h2>
-            <form id="signupForm">
-                <div class="form-group">
-                    <input type="text" placeholder="Full Name" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" placeholder="Email" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Password" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Confirm Password" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Sign Up</button>
-            </form>
-            <p class="switch-form">Already have an account? <a href="#" id="switchToLogin">Sign In</a></p>
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">
-        <div class="toast-content">
-            <span class="toast-message"></span>
-            <button class="toast-close">&times;</button>
-        </div>
-    </div>
 
     <!-- Scripts -->
     <script src="js/components.js"></script>

@@ -74,8 +74,8 @@
     --shadow-xl: 0 20px 25px rgba(45, 134, 89, 0.18);
     
     /* Typography */
-    --font-primary: 'Inter', sans-serif;
-    --font-heading: 'Space Grotesk', sans-serif;
+    --font-heading: 'Poppins', sans-serif;
+    --font-primary: 'Roboto', sans-serif;
     
     /* Spacing */
     --container-max-width: 1200px;
@@ -139,9 +139,7 @@ p {
 
 /* Buttons */
 .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    display: inline-block;
     padding: 12px 24px;
     font-size: 16px;
     font-weight: 500;
@@ -155,20 +153,7 @@ p {
     white-space: nowrap;
 }
 
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left var(--transition-slow);
-}
 
-.btn:hover::before {
-    left: 100%;
-}
 
 .btn-primary {
     background: var(--gradient-primary);
@@ -247,7 +232,7 @@ p {
     font-size: 24px;
     font-weight: 700;
     color: var(--primary-color);
-    font-family: var(--font-heading);
+    font-family: var(--font-secondary);
 }
 
 .logo-icon {
@@ -531,17 +516,17 @@ p {
     transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
 }
 
-.stat-card:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 0 30px rgba(0, 255, 155, 0.2);
-    border-color: var(--primary-color);
+.stat-card:hover, .marketplace-item:hover, .preview-card:hover, .buyer-category-card:hover, .value-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-large);
+    border-color: var(--primary-light);
 }
 
 .stat-number {
     font-size: 3rem;
     font-weight: 700;
     color: var(--primary-color);
-    font-family: var(--font-heading);
+    font-family: var(--font-secondary);
     margin-bottom: 8px;
     text-shadow: 0 0 10px var(--primary-color);
 }

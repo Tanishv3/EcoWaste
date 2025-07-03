@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - EcoWaste</title>
+    <link rel="stylesheet" href="css/seller-dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Seller Dashboard</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#inventory">My Inventory</a>
+            <a href="#offers">Offers</a>
+            <a href="#profile">Profile</a>
+            <button id="logout-btn">Logout</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="add-item">
+            <h2>List New Item</h2>
+            <!-- Item form will be added via JS -->
+        </section>
+
+        <section id="inventory">
+            <h2>My Inventory</h2>
+            <div class="items-container"><!-- Items will be populated via JS --></div>
+        </section>
+
+        <section id="offers">
+            <h2>Current Offers</h2>
+            <div class="offers-container"><!-- Offers will be populated via JS --></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>EcoWaste &copy; 2025 - Connecting e-waste with new life</p>
+    </footer>
+
+    <script src="js/seller-dashboard.js"></script>
+    <script>
+        // Check user role
+        if (localStorage.getItem('userRole') !== 'seller') {
+            window.location.href = 'index.html';
+        }
+        
+        // Logout functionality
+        var logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function() {
+                localStorage.removeItem('userRole');
+                window.location.href = 'index.html';
+            });
+        }
+    </script>
+</body>
+</html>

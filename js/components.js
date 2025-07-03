@@ -2,7 +2,6 @@
 class ComponentLoader {
     static async loadComponent(componentPath, targetElement) {
         try {
-            console.log(`Loading component from: ${componentPath}`);
             const response = await fetch(componentPath);
             if (!response.ok) {
                 throw new Error(`Failed to load component: ${response.status} ${response.statusText}`);
@@ -21,7 +20,6 @@ class ComponentLoader {
             
             if (element) {
                 element.innerHTML = html;
-                console.log(`Component loaded successfully into: ${targetElement}`);
             } else {
                 throw new Error('Target element is null or undefined');
             }
@@ -41,12 +39,10 @@ class ComponentLoader {
     }
 
     static async loadFooter(targetSelector = 'footer-placeholder') {
-        console.log('Loading footer into', targetSelector); // Debug log
         await this.loadComponent('./components/footer.html', `#${targetSelector}`);
         // Confirm footer loaded
         const el = document.querySelector(`#${targetSelector}`);
         if (el && el.innerHTML.trim().length > 0) {
-            console.log('Footer loaded successfully.');
         } else {
             console.error('Footer failed to load or is empty.');
         }
@@ -64,22 +60,25 @@ class ComponentLoader {
         if (footerPlaceholder) {
             await this.loadFooter();
         }
+
+        // Initialize app after components are loaded
+        if (typeof EcoWasteApp !== 'undefined' && !window.app) {
+            window.app = new EcoWasteApp();
+
+            // If on marketplace page, initialize its specific content
+            if (document.getElementById('marketplaceGrid')) {
+                window.app.initMarketplace();
+            } else {
+                // For all other pages, filter/render whatever is necessary
+                window.app.filterItems('all');
+            }
+        }
     }
 }
 
 // Auto-load components when DOM is ready
-document.addEventListener('DOMContentLoaded', async () => {
-    await ComponentLoader.loadAllComponents();
-    
-    // Initialize app after components are loaded
-    if (typeof EcoWasteApp !== 'undefined') {
-        window.app = new EcoWasteApp();
-    }
-    
-    // Initialize navigation after components are loaded
-    if (window.app && window.app.setupNavigation) {
-        window.app.setupNavigation();
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    ComponentLoader.loadAllComponents();
 });
 
 // Export for use in other files
