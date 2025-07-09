@@ -12,7 +12,7 @@
 </head>
 <body>
     <!-- Header Component Placeholder -->
-    <div id="header-placeholder"></div>
+    <?php include 'components/header.php'; ?>
 
     <!-- Page Header -->
     <section class="page-header">

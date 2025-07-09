@@ -12,7 +12,7 @@
 </head>
 <body>
     <!-- Header Component Placeholder -->
-    <div id="header-placeholder"></div>
+    <?php include 'components/header.php'; ?>
 
     <!-- Page Header -->
     <section class="page-header">
@@ -86,7 +86,8 @@
                         </div>
                     </div>
 
-                    <form class="sell-form" id="sellForm">
+                    <form class="sell-form" id="sellForm" action="backend/sell_prod.php" method="post" enctype="multipart/form-data">
+
                         <!-- Step 1: Device Details -->
                         <div class="form-step active" data-step="1">
                             <h3 class="step-title">Tell us about your device</h3>
@@ -143,7 +144,7 @@
                                     <i class="fas fa-cloud-upload-alt"></i>
                                     <p>Click to upload or drag and drop</p>
                                     <p class="file-types">PNG, JPG, JPEG up to 10MB</p>
-                                    <input type="file" id="deviceImages" name="deviceImages" multiple accept="image/*" hidden>
+                                    <input type="file" id="deviceImages" name="deviceImages[]" multiple accept="image/*" hidden>
                                 </div>
                                 <div class="uploaded-images" id="uploadedImages"></div>
                             </div>

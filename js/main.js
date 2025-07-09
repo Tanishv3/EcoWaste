@@ -29,7 +29,7 @@ class EcoWasteApp {
         this.setupModals();
         
         // Forms
-        this.setupForms();
+       
         
         // Scroll effects
         this.setupScrollEffects();
@@ -229,119 +229,7 @@ class EcoWasteApp {
         }
     }
 
-    setupForms() {
-        // Sell form (only if exists)
-        const sellForm = document.getElementById('sellForm');
-        const fileUploadArea = document.getElementById('fileUploadArea');
-        const deviceImages = document.getElementById('deviceImages');
-        const uploadedImages = document.getElementById('uploadedImages');
-
-        if (sellForm && fileUploadArea && deviceImages && uploadedImages) {
-            // File upload functionality
-            fileUploadArea.addEventListener('click', () => deviceImages.click());
-            
-            fileUploadArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                fileUploadArea.classList.add('drag-over');
-            });
-            
-            fileUploadArea.addEventListener('dragleave', () => {
-                fileUploadArea.classList.remove('drag-over');
-            });
-            
-            fileUploadArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                fileUploadArea.classList.remove('drag-over');
-                this.handleFiles(e.dataTransfer.files, uploadedImages);
-            });
-
-            deviceImages.addEventListener('change', (e) => {
-                this.handleFiles(e.target.files, uploadedImages);
-            });
-
-            // Sell form submission
-            sellForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                this.handleSellFormSubmission(sellForm);
-            });
-        }
-
-        // Contact form (only if exists)
-        const contactForm = document.querySelector('.contact-form');
-        if (contactForm) {
-            contactForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                this.handleContactFormSubmission(contactForm);
-            });
-        }
-
-        // Newsletter subscription (only if exists)
-        const newsletter = document.querySelector('.newsletter');
-        if (newsletter) {
-            newsletter.addEventListener('submit', (e) => {
-                e.preventDefault();
-                this.handleNewsletterSubscription(newsletter);
-            });
-        }
-
-        // Hero buttons (only if they exist)
-        const startSellingBtn = document.getElementById('startSellingBtn');
-        const browseBidsBtn = document.getElementById('browseBidsBtn');
-        
-        if (startSellingBtn) {
-            startSellingBtn.addEventListener('click', () => {
-                const sellSection = document.getElementById('sell');
-                if (sellSection) {
-                    sellSection.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    // Redirect to sell page if section doesn't exist
-                    window.location.href = 'sell.html';
-                }
-            });
-        }
-
-        if (browseBidsBtn) {
-            browseBidsBtn.addEventListener('click', () => {
-                // Redirect to the sell page as marketplace is removed
-                window.location.href = 'sell.html';
-            });
-        }
-
-        // Sign-in/sign-up form submission
-        document.getElementById('signin-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Get selected role
-            const role = document.querySelector('input[name="role"]:checked').value;
-            
-            // Store user role
-            localStorage.setItem('userRole', role);
-            
-            // Redirect to appropriate dashboard
-            if (role === 'seller') {
-                window.location.href = 'seller-dashboard.html';
-            } else {
-                window.location.href = 'buyer-dashboard.html';
-            }
-        });
-
-        document.getElementById('signup-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Get selected role
-            const role = document.querySelector('input[name="role"]:checked').value;
-            
-            // Store user role
-            localStorage.setItem('userRole', role);
-            
-            // Redirect to appropriate dashboard
-            if (role === 'seller') {
-                window.location.href = 'seller-dashboard.html';
-            } else {
-                window.location.href = 'buyer-dashboard.html';
-            }
-        });
-    }
+   
 
     handleFiles(files, container) {
         Array.from(files).forEach((file, index) => {

@@ -15,8 +15,8 @@
 </head>
 <body>
     <!-- Header Component Placeholder -->
-    <div id="header-placeholder"></div>
-
+   <?php include 'components/header.php'; ?>
+    
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-background"></div>
